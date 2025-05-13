@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: ScraperApi
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:scraper-api}:${DB_PORT:5432}/${DB_NAME:scraper-db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver

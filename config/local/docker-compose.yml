@@ -1,0 +1,16 @@
+version: '3.5'
+name: backend
+services:
+  postgresql:
+    image: postgres:15.2
+    container_name: postgres-local
+    environment:
+      - POSTGRES_DB=scraper-db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5401:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data:
