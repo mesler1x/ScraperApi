@@ -26,7 +26,7 @@ public class SummaryService {
     public SummaryResponse getSummaryByPublicationId(UUID publicationId) {
         return publicationRepository.findById(publicationId)
                 .map(publication -> {
-                    if (publication.getSummary() == null) {
+                    if (publicationRepository.isSummaryExists(publicationId)) {
                         var summary = summaryModelRestClient.getSummaryFromPublication(publication);
                         var entity = new Summary();
                         entity.setPublication(publication);

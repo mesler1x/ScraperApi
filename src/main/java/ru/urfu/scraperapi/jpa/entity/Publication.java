@@ -25,9 +25,6 @@ public class Publication {
     @JoinColumn(name = "site_id", referencedColumnName = "id")
     private Site site;
 
-    @OneToOne
-    private Summary summary;
-
     @Column(name = "created_at")
     private Long createdAt;
 }

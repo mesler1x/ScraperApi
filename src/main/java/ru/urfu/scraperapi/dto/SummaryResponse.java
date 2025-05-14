@@ -1,6 +1,5 @@
 package ru.urfu.scraperapi.dto;
 
-import ru.urfu.scraperapi.jpa.entity.Publication;
 import ru.urfu.scraperapi.jpa.entity.Summary;
 
 import java.util.UUID;

@@ -9,4 +9,6 @@ import java.util.UUID;
 
 @Repository
 public interface PublicationRepository extends JpaRepository<Publication, UUID> {
+    @Query("SELECT EXISTS (SELECT s.id FROM Summary s WHERE s.publication.id = :publicationId)")
+    boolean isSummaryExists(UUID publicationId);
 }
