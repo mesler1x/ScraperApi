@@ -1,5 +1,6 @@
 package ru.urfu.scraperapi.jpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 
