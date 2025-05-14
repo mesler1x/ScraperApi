@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.urfu.scraperapi.dto.NewsSummaryResponse;
+import ru.urfu.scraperapi.dto.SummaryResponse;
 
 import java.util.List;
 
@@ -17,22 +17,5 @@ import java.util.List;
 @Tag(name = "news", description = "Получение summary по новостям")
 public class NewsController {
 
-    @GetMapping("/top")
-    @Operation(summary = "Получение главных новостей дня")
-    public List<NewsSummaryResponse> getTopNews() {
-        return null;
-    }
 
-    @GetMapping()
-    @Operation(summary = "Получение новостей по категории")
-    public List<NewsSummaryResponse> getNewsByCategory(
-        @Parameter(
-            description = "Категория новости",
-            example = "Кибербезопасность",
-            schema = @Schema(implementation = String.class)
-        )
-        @RequestParam(name = "category") String category
-    ) {
-        return null;
-    }
 }

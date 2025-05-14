@@ -11,5 +11,4 @@ public class ScraperApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(ScraperApiApplication.class, args);
     }
-
 }
