@@ -22,6 +22,7 @@ public class Publication {
     private String author;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "site_id", referencedColumnName = "id")
     private Site site;
 

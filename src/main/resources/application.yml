@@ -11,3 +11,7 @@ spring:
     username: ${DB_USR}
     password: ${DB_PWD}
     driver-class-name: org.postgresql.Driver
+
+scrape:
+  model:
+    summary-url: ${SUMMARY_MODEL_URL:http://52.52.52.52/publication/summary}
