@@ -1,5 +1,6 @@
 package ru.urfu.scraperapi.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +12,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/publication")
 @RequiredArgsConstructor
-@Tag(name = "news", description = "Получение summary по новостям")
+@Tag(name = "Сервис публикаций", description = "Получение публикаций по новостям, собраных скрапером")
 public class PublicationController {
     private final PublicationService publicationService;
 
     @GetMapping
+    @Operation(summary = "Получить все публикации")
     public List<PublicationResponse> findAll(@RequestParam(value = "limit", required = false, defaultValue = "500")
                                                  Integer limit,
                                              @RequestParam(value = "offset", required = false, defaultValue = "0")
