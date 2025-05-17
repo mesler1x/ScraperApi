@@ -13,5 +13,6 @@ spring:
     driver-class-name: org.postgresql.Driver
 
 scrape:
+  cron-job-generation-rate-ms: ${CRON_JOB_GENERATION_TIME_MS:600000}
   model:
-    summary-url: ${SUMMARY_MODEL_URL:http://52.52.52.52/publication/summary}
+    summary-url: ${SUMMARY_MODEL_URL:http://158.160.95.82:8000/publication/summary}
