@@ -11,6 +11,18 @@ spring:
     username: ${DB_USR}
     password: ${DB_PWD}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      pool-name: scraper-hikari-pool
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 
 scrape:
   cron-job-generation-rate-ms: ${CRON_JOB_GENERATION_TIME_MS:600000}
