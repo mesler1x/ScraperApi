@@ -15,5 +15,4 @@ public interface PublicationRepository extends JpaRepository<Publication, UUID> 
 
     @Query("SELECT p FROM Publication p LEFT JOIN Summary s ON p.id = s.publication.id WHERE s IS NULL")
     List<Publication> findPublicationsWithoutSummary();
-
 }

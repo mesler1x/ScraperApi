@@ -2,6 +2,7 @@ package ru.urfu.scraperapi.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.urfu.scraperapi.dto.PublicationResponse;
 import ru.urfu.scraperapi.jpa.repository.PublicationRepository;
@@ -14,7 +15,7 @@ public class PublicationService {
     private final PublicationRepository publicationRepository;
 
     public List<PublicationResponse> findAll(int limit, int offset) {
-        return publicationRepository.findAll(PageRequest.of(offset, limit))
+        return publicationRepository.findAll(PageRequest.of(offset, limit, Sort.by("publishedAt").descending()))
                 .stream()
                 .map(PublicationResponse::of)
                 .toList();

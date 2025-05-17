@@ -12,6 +12,7 @@ public record PublicationResponse(
         String url,
         String author,
         UUID siteId,
+        Long publishedAt,
         Long createdAt
 ) {
     public static PublicationResponse of(Publication publication) {
@@ -23,6 +24,7 @@ public record PublicationResponse(
                 publication.getUrl(),
                 publication.getAuthor(),
                 siteId,
+                publication.getPublishedAt(),
                 publication.getCreatedAt()
         );
     }

@@ -26,6 +26,9 @@ public class Publication {
     @JoinColumn(name = "site_id", referencedColumnName = "id")
     private Site site;
 
+    @Column(name = "published_at")
+    private Long publishedAt;
+
     @Column(name = "created_at")
     private Long createdAt;
 }
