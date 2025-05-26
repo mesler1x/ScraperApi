@@ -26,5 +26,6 @@ management:
 
 scrape:
   cron-job-generation-rate-ms: ${CRON_JOB_GENERATION_TIME_MS:600000}
+  is-giga-chat-enabled: true
   model:
-    summary-url: ${SUMMARY_MODEL_URL:http://158.160.95.82:8000/publication/summary}
+    summary-url: ${SUMMARY_MODEL_URL:http://89.169.143.232:8000/publication/summary}
