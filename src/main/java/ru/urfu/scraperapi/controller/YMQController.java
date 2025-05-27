@@ -4,7 +4,6 @@ import com.amazon.sqs.javamessaging.AmazonSQSMessagingClientWrapper;
 import com.amazon.sqs.javamessaging.ProviderConfiguration;
 import com.amazon.sqs.javamessaging.SQSConnection;
 import com.amazon.sqs.javamessaging.SQSConnectionFactory;
-import com.amazon.sqs.javamessaging.message.SQSTextMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.jms.*;
@@ -27,8 +26,8 @@ import java.net.URI;
 public class YMQController {
 
     private static final String queueName = "sample-queue";
-    private static final String accessKeyId = "YCAJENL1EyZ3QjkrUAf5HKDHG";
-    private static final String secretAccessKeyId = "YCNLQUo5L9vtGvKvcxZqDxwAbFcT961honiP2IuX";
+    private static final String aki = "YCAJENL1EyZ3QjkrUAf5HKDHG";
+    private static final String saki = "YCNLQUo5L9vtGvKvcxZqDxwAbFcT961honiP2IuX";
 
     @Operation(summary = "Тестовое отправление сообщение в очередь YMQ")
     @PostMapping("/send-message")
@@ -37,8 +36,8 @@ public class YMQController {
                 .region(Region.of("ru-central1"))
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create(
-                                accessKeyId,
-                                secretAccessKeyId
+                                aki,
+                                saki
                         )
                 ))
                 .endpointOverride(URI.create("https://message-queue.api.cloud.yandex.net/b1gg2mgvrsoqais0clr6/dj600000005cbbvc0459/sample-queue"))
