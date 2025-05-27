@@ -21,6 +21,9 @@ public class Publication {
 
     private String author;
 
+    @OneToOne(mappedBy = "publication")
+    private Summary summary;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "site_id", referencedColumnName = "id")
