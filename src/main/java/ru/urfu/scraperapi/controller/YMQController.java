@@ -26,9 +26,9 @@ import java.net.URI;
 @Tag(name = "Тестовый контроллер для общения с YMQ")
 public class YMQController {
 
-    private static String queueName = "sample-queue";
-    private static String accessKeyId = "YCAJENL1EyZ3QjkrUAf5HKDHG";
-    private static String secretAccessKeyId = "YCNLQUo5L9vtGvKvcxZqDxwAbFcT961honiP2IuX";
+    private static final String queueName = "sample-queue";
+    private static final String accessKeyId = "YCAJENL1EyZ3QjkrUAf5HKDHG";
+    private static final String secretAccessKeyId = "YCNLQUo5L9vtGvKvcxZqDxwAbFcT961honiP2IuX";
 
     @Operation(summary = "Тестовое отправление сообщение в очередь YMQ")
     @PostMapping("/send-message")
