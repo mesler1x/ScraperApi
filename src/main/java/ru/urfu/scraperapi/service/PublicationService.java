@@ -8,6 +8,7 @@ import ru.urfu.scraperapi.dto.PublicationResponse;
 import ru.urfu.scraperapi.jpa.repository.PublicationRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -21,4 +22,7 @@ public class PublicationService {
                 .toList();
     }
 
+    public void deleteById(UUID publicationId) {
+        publicationRepository.deleteById(publicationId);
+    }
 }

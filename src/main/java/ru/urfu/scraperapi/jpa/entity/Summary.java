@@ -14,7 +14,7 @@ public class Summary {
     @GeneratedValue
     private UUID id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "publication_id", referencedColumnName = "id", nullable = false)
     private Publication publication;
 

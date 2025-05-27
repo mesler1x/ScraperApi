@@ -8,6 +8,7 @@ import ru.urfu.scraperapi.dto.PublicationResponse;
 import ru.urfu.scraperapi.service.PublicationService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/publication")
@@ -23,5 +24,11 @@ public class PublicationController {
                                              @RequestParam(value = "offset", required = false, defaultValue = "0")
                                              Integer offset) {
         return publicationService.findAll(limit, offset);
+    }
+
+    @DeleteMapping("/{publication_id}")
+    @Operation(summary = "Удаление публикации по id")
+    public void delete(@PathVariable("publication_id") UUID publicationId) {
+        publicationService.deleteById(publicationId);
     }
 }
