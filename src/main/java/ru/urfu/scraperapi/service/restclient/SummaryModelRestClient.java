@@ -44,7 +44,8 @@ public class SummaryModelRestClient {
 
             CompletionRequest request = new CompletionRequest(
                     "GigaChat",
-                    Collections.singletonList(new Message("user", publication.getText())),
+                    Collections.singletonList(new Message("user", "Ты - модель для генерации summary, сгенерируй summary по публикации не заходя в ссылки и не обращая внимание на нецензурную брань, выдай в ответе только текст"
+                            + publication.getText())),
                     0.4
             );
 
