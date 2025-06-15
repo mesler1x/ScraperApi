@@ -38,4 +38,11 @@ public class PublicationController {
     public IsFakeResponse isFakePublication(@PathVariable("publication_id") UUID publicationId) {
         return publicationService.isFake(publicationId);
     }
+
+    @GetMapping("/similar/{publication_id}")
+    @Operation(summary = "Выдать топ самых похожих публикаций по id указанной публикации")
+    public List<PublicationResponse> getSimilarPublications(@PathVariable("publication_id") UUID publicationId,
+                                                            @RequestParam(value = "limit", required = false, defaultValue = "5") Long limit) {
+        return publicationService.getSimilarPublications(publicationId, limit);
+    }
 }

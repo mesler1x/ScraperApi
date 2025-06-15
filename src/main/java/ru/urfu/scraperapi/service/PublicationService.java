@@ -50,4 +50,10 @@ public class PublicationService {
             isFake(publication.getId());
         });
     }
+
+    public List<PublicationResponse> getSimilarPublications(UUID publicationId, Long limit) {
+        return publicationRepository.getSimilarPublications(publicationId, limit).stream()
+                .map(PublicationResponse::of)
+                .toList();
+    }
 }
