@@ -28,10 +28,6 @@ public class PublicationService {
                 .toList();
     }
 
-    public void deleteById(UUID publicationId) {
-        publicationRepository.deleteById(publicationId);
-    }
-
     public IsFakeResponse isFake(UUID publicationId) {
         var publication = publicationRepository.findById(publicationId).get();
         var isFakeFromPublication = aiModelRestClient.getIsFakeFromPublication(publication);

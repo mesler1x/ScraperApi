@@ -27,12 +27,6 @@ public class PublicationController {
         return publicationService.findAll(limit, offset);
     }
 
-    @DeleteMapping("/{publication_id}")
-    @Operation(summary = "Удаление публикации по id")
-    public void delete(@PathVariable("publication_id") UUID publicationId) {
-        publicationService.deleteById(publicationId);
-    }
-
     @PostMapping("/is-fake/{publication_id}")
     @Operation(summary = "Перепроверить публикацию на фейк")
     public IsFakeResponse isFakePublication(@PathVariable("publication_id") UUID publicationId) {
