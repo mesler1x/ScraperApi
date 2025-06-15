@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.urfu.scraperapi.dto.IsFakeResponse;
 import ru.urfu.scraperapi.dto.PublicationResponse;
 import ru.urfu.scraperapi.service.PublicationService;
 
@@ -30,5 +31,11 @@ public class PublicationController {
     @Operation(summary = "Удаление публикации по id")
     public void delete(@PathVariable("publication_id") UUID publicationId) {
         publicationService.deleteById(publicationId);
+    }
+
+    @PostMapping("/is-fake/{publication_id}")
+    @Operation(summary = "Перепроверить публикацию на фейк")
+    public IsFakeResponse isFakePublication(@PathVariable("publication_id") UUID publicationId) {
+        return publicationService.isFake(publicationId);
     }
 }

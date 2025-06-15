@@ -9,10 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ru.urfu.scraperapi.dto.CompletionRequest;
-import ru.urfu.scraperapi.dto.GigaChatResponse;
-import ru.urfu.scraperapi.dto.ModelSummaryRequest;
-import ru.urfu.scraperapi.dto.ModelSummaryResponse;
+import ru.urfu.scraperapi.dto.*;
 import ru.urfu.scraperapi.jpa.entity.Publication;
 import ru.urfu.scraperapi.model.Message;
 import ru.urfu.scraperapi.service.TokenManager;
@@ -23,7 +20,7 @@ import static ru.urfu.scraperapi.config.RestTemplateConfig.GIGA_CHAT_REST_TEMPLA
 
 @Service
 @RequiredArgsConstructor
-public class SummaryModelRestClient {
+public class AiModelRestClient {
     private final RestTemplate restTemplate;
     private final TokenManager tokenManager;
     @Qualifier(GIGA_CHAT_REST_TEMPLATE_BEAN_NAME)
@@ -63,5 +60,34 @@ public class SummaryModelRestClient {
         headers.setContentType(MediaType.APPLICATION_JSON);
         var httpEntity = new HttpEntity<>(ModelSummaryRequest.from(publication), headers);
         return restTemplate.postForObject(summaryUrl, httpEntity, ModelSummaryResponse.class);
+    }
+
+    public IsFakeResponse getIsFakeFromPublication(Publication publication) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        headers.setBearerAuth(tokenManager.getToken());
+
+        CompletionRequest request = new CompletionRequest(
+                "GigaChat",
+                Collections.singletonList(new Message("user", """
+                        Ты - модель распознования фейков в инфополе СМИ 
+                        ниже тебе представлена запись из СМИ
+                        попытайся пределить фейк это или нет.
+                        В ответе предоставь ДА если это фейк или НЕТ если это не фейк
+                        """
+                        + publication.getText())),
+                0.4
+        );
+
+        HttpEntity<CompletionRequest> requestEntity = new HttpEntity<>(request, headers);
+        GigaChatResponse response = gigaChatRestTemplate.exchange(
+                "https://gigachat.devices.sberbank.ru/api/v1/chat/completions",
+                HttpMethod.POST,
+                requestEntity,
+                GigaChatResponse.class
+        ).getBody();
+        var isFake = response.choices().get(0).getMessage().getContent().contains("ДА") ? true : false;
+        return new IsFakeResponse(isFake);
     }
 }

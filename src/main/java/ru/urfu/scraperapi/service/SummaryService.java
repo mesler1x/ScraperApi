@@ -1,6 +1,7 @@
 package ru.urfu.scraperapi.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -10,7 +11,7 @@ import ru.urfu.scraperapi.jpa.entity.Publication;
 import ru.urfu.scraperapi.jpa.entity.Summary;
 import ru.urfu.scraperapi.jpa.repository.PublicationRepository;
 import ru.urfu.scraperapi.jpa.repository.SummaryRepository;
-import ru.urfu.scraperapi.service.restclient.SummaryModelRestClient;
+import ru.urfu.scraperapi.service.restclient.AiModelRestClient;
 
 import java.time.Instant;
 import java.util.List;
@@ -23,13 +24,13 @@ public class SummaryService {
 
     private final SummaryRepository summaryRepository;
     private final PublicationRepository publicationRepository;
-    private final SummaryModelRestClient summaryModelRestClient;
+    private final AiModelRestClient aiModelRestClient;
 
     public SummaryResponse getSummaryByPublicationId(UUID publicationId) {
         return publicationRepository.findById(publicationId)
                 .map(publication -> {
                     if (publicationRepository.isSummaryNotExists(publicationId)) {
-                        var summary = summaryModelRestClient.getSummaryFromPublication(publication);
+                        var summary = aiModelRestClient.getSummaryFromPublication(publication);
                         var summaryEntity = new Summary();
                         summaryEntity.setPublication(publication);
                         summaryEntity.setSummary(summary.completion());
@@ -51,7 +52,7 @@ public class SummaryService {
         return summaryRepository.findById(summaryId)
                 .map(existingSummary -> {
                     Publication publication = existingSummary.getPublication();
-                    var newSummary = summaryModelRestClient.getSummaryFromPublication(publication);
+                    var newSummary = aiModelRestClient.getSummaryFromPublication(publication);
                     existingSummary.setSummary(newSummary.completion());
                     return summaryRepository.save(existingSummary);
                 })
@@ -59,6 +60,7 @@ public class SummaryService {
                 .orElseThrow(() -> new EntityNotFoundException("Summary not found with id: " + summaryId));
     }
 
+    @Transactional
     @Scheduled(fixedRateString = "${scrape.cron-job-generation-rate-ms}", initialDelay = 5000)
     public void processSummaryGeneration() {
         var publicationsWithoutSummary = publicationRepository.findPublicationsWithoutSummary();
@@ -66,9 +68,9 @@ public class SummaryService {
         var startTime = Instant.now().toEpochMilli();
         publicationsWithoutSummary
                 .forEach(publication -> {
-                    var summary = summaryModelRestClient.getSummaryFromPublication(publication);
+                    var summary = aiModelRestClient.getSummaryFromPublication(publication);
                     var summaryEntity = new Summary();
-                    summaryEntity.setPublication(publication);
+                    summaryEntity.setPublication(publicationRepository.findById(publication.getId()).get());
                     summaryEntity.setSummary(summary.completion());
                     summaryEntity.setCreatedAt(Instant.now().toEpochMilli());
                     summaryRepository.save(summaryEntity);

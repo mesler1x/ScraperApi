@@ -13,7 +13,8 @@ public record PublicationResponse(
         String author,
         UUID siteId,
         Long publishedAt,
-        Long createdAt
+        Long createdAt,
+        Boolean isFake
 ) {
     public static PublicationResponse of(Publication publication) {
         var siteId = publication.getSite() != null ? publication.getSite().getId() : null;
@@ -25,7 +26,8 @@ public record PublicationResponse(
                 publication.getAuthor(),
                 siteId,
                 publication.getPublishedAt(),
-                publication.getCreatedAt()
+                publication.getCreatedAt(),
+                publication.getIsFake()
         );
     }
 }

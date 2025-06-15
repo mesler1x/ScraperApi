@@ -2,6 +2,7 @@ package ru.urfu.scraperapi.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -17,6 +18,7 @@ import java.util.UUID;
 import static ru.urfu.scraperapi.config.RestTemplateConfig.GIGA_CHAT_REST_TEMPLATE_BEAN_NAME;
 
 @Service
+@Slf4j
 public class TokenManager {
 
     private final RestTemplate restTemplate;
@@ -33,12 +35,16 @@ public class TokenManager {
 
     @PostConstruct
     public void init() {
-        getToken();
+        try {
+            getToken();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
     }
 
     public String getToken() {
         if (isTokenExpired()) {
-            var authKey = "YjcxYjA0YzctODgzMi00NGI1LWFiZmQtODRiYzg1ZWNlMWU5Ojc1MThmM2EyLTRmMWItNGFlNC1iYWFjLTZiNjIyNWIyZDRlZQ==";
+            var authKey = "ZTM4YTA3MjMtNDlhYy00MmZkLWEwMjgtYzNlM2MyMTMyY2EzOjcxYWVlZTQ4LThiZmItNGY1MC1iNWE1LWZlOTU5NDI3ODIwZg==";
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
             headers.set("Accept", "application/json");
