@@ -60,7 +60,6 @@ public class SummaryService {
                 .orElseThrow(() -> new EntityNotFoundException("Summary not found with id: " + summaryId));
     }
 
-    @Transactional
     @Scheduled(fixedRateString = "${scrape.cron-job-generation-rate-ms}", initialDelay = 5000)
     public void processSummaryGeneration() {
         var publicationsWithoutSummary = publicationRepository.findPublicationsWithoutSummary();

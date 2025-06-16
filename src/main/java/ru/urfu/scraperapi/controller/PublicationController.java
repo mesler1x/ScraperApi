@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/publication")
+@RequestMapping("/publication")
 @RequiredArgsConstructor
 @Tag(name = "Сервис публикаций", description = "Получение публикаций по новостям, собраных скрапером")
 public class PublicationController {
@@ -38,5 +38,11 @@ public class PublicationController {
     public List<PublicationResponse> getSimilarPublications(@PathVariable("publication_id") UUID publicationId,
                                                             @RequestParam(value = "limit", required = false, defaultValue = "5") Long limit) {
         return publicationService.getSimilarPublications(publicationId, limit);
+    }
+
+    @GetMapping("/{publication_id}")
+    @Operation(summary = "Получить публикацию по id")
+    public PublicationResponse getPublication(@PathVariable("publication_id") UUID publicationId) {
+        return publicationService.getById(publicationId);
     }
 }

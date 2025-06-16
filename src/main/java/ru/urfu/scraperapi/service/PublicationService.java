@@ -52,4 +52,10 @@ public class PublicationService {
                 .map(PublicationResponse::of)
                 .toList();
     }
+
+    public PublicationResponse getById(UUID publicationId) {
+        return publicationRepository.findById(publicationId)
+                .map(PublicationResponse::of)
+                .orElse(null);
+    }
 }
